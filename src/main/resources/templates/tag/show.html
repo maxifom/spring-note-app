@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="base :: head" th:remove="tag"></div>
+    <title>Home page</title>
+</head>
+<body>
+<div th:replace="base :: navbar" th:remove="tag"></div>
+<div class="container mt-2">
+    <h1 th:text="${'Tag '+ tag.getName()}"></h1>
+    <h2>Notes:</h2>
+    <ul th:if="${!tag.getNotes().isEmpty()}">
+        <li th:each="note:${tag.getNotes()}">
+            <a href="#" th:href="@{'/user/notes/'+${note.getId()}}" th:text="${note.getTitle()}"></a>
+        </li>
+    </ul>
+
+
+    <div class="my-4">
+        <form th:action="@{'/user/tags/'+${tag.getId()}}" th:method="PUT">
+            <h3>Update tag</h3>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input required  type="text" th:value="${tag.getName()}" name="name" class="form-control" id="name">
+            </div>
+            <button type="submit" class="btn btn-primary">Update tag</button>
+        </form>
+    </div>
+    <form th:object="${tag}" th:action="@{'/user/tags/'+${tag.getId()}}" method="POST" th:method="delete">
+        <button type="submit" class="btn btn-danger">Delete Tag</button>
+    </form>
+</div>
+<div th:replace="base :: scripts" th:remove="tag"></div>
+</body>
+</html>

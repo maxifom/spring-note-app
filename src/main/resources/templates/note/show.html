@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="base :: head" th:remove="tag"></div>
+    <title>Home page</title>
+</head>
+<body>
+<div th:replace="base :: navbar" th:remove="tag"></div>
+<div class="container mt-2">
+    <h1 th:text="${note.getTitle()}"></h1>
+    <p th:utext="${#strings.replace(#strings.escapeXml(note.getBody()),'&#10;','&lt;br&gt;')}"></p>
+    <div th:if="${!note.getTags().isEmpty()}">
+        <h3>Tags:</h3>
+            <div class="d-flex flex-row mt-2" th:each="tag: ${note.getTags()}">
+                <a href="#" th:href="@{'/user/tags/' + ${tag.getId()}}" class="mr-4" th:text="${tag.getName()}"></a>
+                <form th:action="@{'/user/notes/'+${note.getId()} + '/tags/'+${tag.getId()}}" th:method="delete">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </div>
+    </div>
+
+    <hr>
+    <div class="mt-4">
+        <form th:action="@{'/user/notes/'+${note.getId()} + '/tags'}" th:method="POST">
+            <h3>Add tag</h3>
+            <input required  type="hidden" name="note_id" th:value="${note.getId()}">
+            <div class="form-group">
+                <label for="name">Tag</label>
+                <input required  type="text" name="name" class="form-control" id="name">
+            </div>
+            <button type="submit" class="btn btn-primary">Add tag</button>
+        </form>
+    </div>
+
+    <div class="my-4">
+        <h3>Edit note</h3>
+        <form th:action="@{'/user/notes/'+${note.getId()}}" th:method="PUT">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input required  type="text" th:value="${note.getTitle()}" name="title" class="form-control" id="title">
+            </div>
+            <div class="form-group">
+                <label for="body">Body</label>
+                <textarea required  th:text="${note.getBody()}" rows="5" name="body" class="form-control" id="body"></textarea>
+            </div>
+            <button type="submit" class="btn btn-info">Update note</button>
+        </form>
+    </div>
+
+
+
+    <form th:object="${note}" th:action="@{'/user/notes/'+${note.getId()}}" method="POST" th:method="delete">
+        <button type="submit" class="btn btn-danger">Delete Note</button>
+    </form>
+
+</div>
+<div th:replace="base :: scripts" th:remove="tag"></div>
+</body>
+</html>

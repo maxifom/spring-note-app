@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="base :: head" th:remove="tag"></div>
+    <title>Home page</title>
+</head>
+<body>
+<div th:replace="base :: navbar" th:remove="tag"></div>
+<div class="container mt-2">
+    <h1>Tags: </h1>
+    <ul th:if="${tags != null && !tags.isEmpty()}">
+        <li th:each="tag:${tags}" class="mt-2">
+            <div class="d-flex flex-row">
+                <a href="#" th:href="@{'/user/tags/'+${tag.getId()}}" th:text="${tag.getName()}"></a>
+                <div class="ml-4">
+                    <form th:object="${tag}" th:action="@{'/user/tags/'+${tag.getId()}}" method="POST"
+                          th:method="delete">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <hr>
+</div>
+<div th:replace="base :: scripts" th:remove="tag"></div>
+</body>
+</html>
