@@ -7,12 +7,12 @@
 <body>
 <div th:replace="base :: navbar" th:remove="tag"></div>
 <div class="container mt-2">
-    <h1 th:text="${note.getTitle()}"></h1>
+    <h2 th:text="${note.getTitle()}"></h2>
     <p th:utext="${#strings.replace(#strings.escapeXml(note.getBody()),'&#10;','&lt;br&gt;')}"></p>
     <div th:if="${!note.getTags().isEmpty()}">
         <h3>Tags:</h3>
             <div class="d-flex flex-row mt-2" th:each="tag: ${note.getTags()}">
-                <a href="#" th:href="@{'/user/tags/' + ${tag.getId()}}" class="mr-4" th:text="${tag.getName()}"></a>
+                <a href="#" th:href="@{'/user/tags/' + ${tag.getId()}}" class="mr-4" th:text="${tag.getName()}" style="width: 100%"></a>
                 <form th:action="@{'/user/notes/'+${note.getId()} + '/tags/'+${tag.getId()}}" th:method="delete">
                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                 </form>

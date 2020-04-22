@@ -1,4 +1,4 @@
-<!doctype html>
+        <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="base :: head" th:remove="tag"></div>
@@ -7,8 +7,8 @@
 <body>
 <div th:replace="base :: navbar" th:remove="tag"></div>
 <div class="container mt-2">
-    <h1 th:text="${'Tag '+ tag.getName()}"></h1>
-    <h2>Notes:</h2>
+    <h2 th:text="${'Tag '+ tag.getName()}"></h2>
+    <h3>Notes:</h3>
     <ul th:if="${!tag.getNotes().isEmpty()}">
         <li th:each="note:${tag.getNotes()}">
             <a href="#" th:href="@{'/user/notes/'+${note.getId()}}" th:text="${note.getTitle()}"></a>
