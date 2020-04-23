@@ -7,13 +7,13 @@
 <body>
 <div th:replace="base :: navbar" th:remove="tag"></div>
 <div class="container mt-2">
-    <h1>Note app</h1>
+    <h2>Note app</h2>
     <ul th:if="${notes != null && !notes.isEmpty()}">
         <li th:each="note:${notes}">
-            <div class="d-flex flex-row">
-                <a href="#" th:href="@{'/user/notes/'+${note.getId()}}" th:text="${note.getTitle()}"></a>
+            <div class="d-flex flex-row" style="margin: 5px">
+                <a href="#" th:href="@{'/user/notes/'+${note.getId()}}" th:text="${note.getTitle()}" style="width: 80%"></a>
                 <div th:if="${is_admin == true}" class="ml-4 d-flex flex-row">
-                    <span class="mr-4" th:text="${'By '+note.getUser().getUserName()}"></span>
+                    <span class="mr-4" th:text="${'By '+note.getUser().getUserName()}" style="width: 40%"></span>
                     <form th:object="${note}" th:action="@{'/user/notes/'+${note.getId()}}" method="POST"
                           th:method="delete">
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>

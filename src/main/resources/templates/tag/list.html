@@ -7,11 +7,11 @@
 <body>
 <div th:replace="base :: navbar" th:remove="tag"></div>
 <div class="container mt-2">
-    <h1>Tags: </h1>
+    <h2>Tags: </h2>
     <ul th:if="${tags != null && !tags.isEmpty()}">
         <li th:each="tag:${tags}" class="mt-2">
             <div class="d-flex flex-row">
-                <a href="#" th:href="@{'/user/tags/'+${tag.getId()}}" th:text="${tag.getName()}"></a>
+                <a href="#" th:href="@{'/user/tags/'+${tag.getId()}}" th:text="${tag.getName()}" style="width: 100%"></a>
                 <div class="ml-4">
                     <form th:object="${tag}" th:action="@{'/user/tags/'+${tag.getId()}}" method="POST"
                           th:method="delete">
